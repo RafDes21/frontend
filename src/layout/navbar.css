@@ -1,0 +1,21 @@
+.nav-item {
+  color: #010101;
+  text-decoration: none;
+  font-size: 20px;
+  position: relative;
+}
+
+.nav-item::after {
+  content: "";
+  position: absolute;
+  border-bottom: 4px solid #59c8ee;
+  left: 0;
+  bottom: -5px;
+  z-index: 2;
+  width: 0;
+}
+
+.nav-item:hover::after {
+  width: 100%;
+  transition: all 0.5s;
+}
