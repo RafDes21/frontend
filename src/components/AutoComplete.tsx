@@ -17,7 +17,7 @@ const AutoComplete: React.FC<{}> = () => {
 
   const clients = listClients.map((client) => ({
     id: client._id,
-    label: client.nombre,
+    label: client.name,
   }));
 
   const handleChange = (event: any, newValue: Client | null) => {

@@ -1,41 +1,44 @@
-import { saveClients, saveClient } from "../slices/clienteSlice";
-import axios from "axios";
+import { Dispatch } from "redux";
+import { AddClient, Client, Clients, ClientsLoadedAction } from "../interface";
+import { saveClients, selectClient } from "../slices/client.Slice";
+import {
+  getClients,
+  createClient,
+  getClientById,
+  updateClientById,
+  deleteClientsByIds,
+} from "./clients.api";
 
-const apiHost = process.env.REACT_APP_API_HOST;
-console.log(apiHost)
-export const getClients = () => {
-  return async (dispatch: any) => {
-    const res = await axios.get(`${apiHost}/api/clientes`);
-    dispatch(saveClients(res.data));
+export const addClient = async (client: AddClient) => {
+  await createClient(client);
+};
+
+export const fetchClients =
+  () => async (dispatch: Dispatch<ClientsLoadedAction>) => {
+    try {
+      const clients = await getClients();
+      dispatch(saveClients(clients));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const fetchClientById = (id: string) => {
+  return async (dispatch: Dispatch<ClientsLoadedAction>) => {
+    try {
+      const client = await getClientById(id);
+
+      dispatch(selectClient(client));
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
-export const getClientById = (id: string) => {
-  return async (dispatch: any) => {
-    const res = await axios.get(`${apiHost}/api/clientes/${id}`);
-    dispatch(saveClient(res.data));
-  };
+export const updateClient = async (id: string, client: AddClient) => {
+  await updateClientById(id, client);
 };
 
-export const deleteClientsByIds = (ids: string[]) => {
-  return async (dispatch: any) => {
-    await axios.delete(`${apiHost}/api/clientes?ids=${ids.join(",")}`);
-    dispatch(getClients());
-  };
-};
-
-export const updateClientById = (id: string, client: any) => {
-  return async () => {
-    await axios.put(`${apiHost}/api/clientes/${id}`, client);
-  };
-};
-
-export const createClient = (client: any) => {
-  return async () => {
-    await axios.post(`${apiHost}/api/clientes`, client);
-  };
-};
-
-export const getClientId = async (id: string) => {
-  return await axios.get(`${apiHost}/api/clientes/${id}`);
+export const deleteClients = async (ids: string[]) => {
+  await deleteClientsByIds(ids);
 };

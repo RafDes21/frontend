@@ -1,32 +1,29 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  ClientState,
+  Client,
+  ToggleClientPayload,
+  Clients,
+} from "../interface";
 
-interface ToggleClientPayload {
-  id: string;
-  checked: boolean;
-}
-interface ClientState {
-  clients: any[];
-  selectedClientIds: string[];
-  client: any;
-  stateModal: boolean;
-}
 const initialState: ClientState = {
   clients: [],
-  client: [],
+  selectedClient: null,
   selectedClientIds: [],
-  stateModal: false,
+  isModalOpen: false,
 };
 
 const clientSlice = createSlice({
   name: "clients",
   initialState,
   reducers: {
-    saveClients: (state, action: PayloadAction<[]>) => {
+    saveClients: (state, action: PayloadAction<Clients[]>) => {
       state.clients = action.payload;
     },
-    saveClient: (state, action: PayloadAction<[]>) => {
-      state.client = action.payload;
+    selectClient: (state, action: PayloadAction<Clients>) => {
+      state.selectedClient = action.payload;
     },
+
     toggleClientId: (state, action: PayloadAction<ToggleClientPayload>) => {
       if (action.payload.checked) {
         state.selectedClientIds = [
@@ -39,12 +36,26 @@ const clientSlice = createSlice({
         });
       }
     },
-    updateStateModal: (state, action: PayloadAction<boolean>) => {
-      state.stateModal = action.payload;
+    toggleClientIdClear:(state, action)=>{
+      console.log(action.payload);
+      
+      state.selectedClientIds = action.payload
+    },
+    openModal: (state) => {
+      state.isModalOpen = true;
+    },
+    closeModal: (state) => {
+      state.isModalOpen = false;
     },
   },
 });
 
 export default clientSlice.reducer;
-export const { saveClients, saveClient, toggleClientId, updateStateModal } =
-  clientSlice.actions;
+export const {
+  saveClients,
+  selectClient,
+  toggleClientId,
+  openModal,
+  closeModal,
+  toggleClientIdClear
+} = clientSlice.actions;

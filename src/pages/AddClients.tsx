@@ -1,11 +1,11 @@
 import { Container } from '@mui/system'
 import React from 'react'
-import Formul from '../components/Formul'
+import Form from '../components/Form'
 
  const Clients: React.FC<{}> = () => {
   return (
   <Container >
-    <Formul/>
+    <Form/>
   </Container>
   )
 }

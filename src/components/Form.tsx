@@ -8,64 +8,37 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  createClient,
-  getClientId,
-  updateClientById,
-} from "../redux/thunks/thunksClients";
 import { useAppDispatch } from "../redux/hooks/hooks";
+import { addClient, updateClient } from "../redux/thunks/thunksClients";
+import { AddClient } from "../redux/interface";
 
-type DatosType = {
-  nombre: string;
-  documento: string;
-  direccion: string;
-  telefono: string;
-};
-
-const Formul: React.FC = () => {
+const Form = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
-  const [datos, setDatos] = React.useState<DatosType>({
-    nombre: "",
-    documento: "",
-    direccion: "",
-    telefono: "",
+  const [data, setData] = React.useState<AddClient>({
+    name: "",
+    document: "",
+    address: "",
+    phone: "",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDatos({ ...datos, [e.target.name]: e.target.value });
+    setData({ ...data, [e.target.name]: e.target.value });
   };
-  const handeSubmit = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (id) {
-      dispatch(updateClientById(id, datos));
+      updateClient(id, data);
       navigate("/");
-      toast.success("Cliente Actualizado...");
+      toast.success("Client update...");
     } else {
-      dispatch(createClient(datos));
-      toast.success("Cliente Agregado!");
+      addClient(data);
+      toast.success("Add Client!");
       navigate("/");
     }
   };
-
-  const itemClient = async (id: string) => {
-    const res = await getClientId(id);
-    const { nombre, documento, direccion, telefono } = res.data;
-    setDatos({
-      nombre,
-      documento,
-      direccion,
-      telefono,
-    });
-  };
-
-  useEffect(() => {
-    if (id) {
-      itemClient(id);
-    }
-  }, [id]);
 
   return (
     <Container maxWidth="sm" sx={{ marginTop: "90px" }}>
@@ -74,33 +47,33 @@ const Formul: React.FC = () => {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        sx={{ minHeigth: "100vh" }}
+        sx={{ minHeight: "100vh" }}
       >
         <Grid item>
           <Paper sx={{ padding: "10px", borderRadius: "8px" }}>
             {id ? (
               <Typography sx={{ mt: 1, mb: 1 }} align="center" color="primary">
-                DATOS EDITADOS
+                EDITED DATA
               </Typography>
             ) : (
               <Typography sx={{ mt: 1, mb: 1 }} align="center" color="primary">
-                INGRESE UN NUEVO CLIENTE
+                ADD NEW CLIENT
               </Typography>
             )}
-            <Box component="form" onSubmit={handeSubmit}>
+            <Box component="form" onSubmit={handleSubmit}>
               <TextField
                 fullWidth
-                name="nombre"
-                label="Nombre"
-                value={datos.nombre}
+                name="name"
+                label="Name"
+                value={data.name}
                 sx={{ mt: 2, mb: 1.5 }}
                 required
                 onChange={handleInputChange}
               />
               <TextField
                 fullWidth
-                name="documento"
-                value={datos.documento}
+                name="document"
+                value={data.document}
                 label="DNI"
                 sx={{ mt: 2, mb: 1.5 }}
                 required
@@ -108,20 +81,20 @@ const Formul: React.FC = () => {
               />
               <TextField
                 fullWidth
-                name="direccion"
-                label="Dirección"
+                name="address"
+                label="address"
                 sx={{ mt: 2, mb: 1.5 }}
-                value={datos.direccion}
+                value={data.address}
                 required
                 onChange={handleInputChange}
               />
               <TextField
                 fullWidth
-                name="telefono"
-                label="Teléfono"
+                name="phone"
+                label="phone"
                 sx={{ mt: 2, mb: 1.5 }}
                 required
-                value={datos.telefono}
+                value={data.phone}
                 onChange={handleInputChange}
               />
               {id ? (
@@ -131,7 +104,7 @@ const Formul: React.FC = () => {
                   variant="contained"
                   color="success"
                 >
-                  Actualizar
+                  Update
                 </Button>
               ) : (
                 <Button
@@ -140,7 +113,7 @@ const Formul: React.FC = () => {
                   variant="contained"
                   color="success"
                 >
-                  Agregar Cliente
+                  Add Client
                 </Button>
               )}
             </Box>
@@ -151,4 +124,4 @@ const Formul: React.FC = () => {
   );
 };
 
-export default Formul;
+export default Form;

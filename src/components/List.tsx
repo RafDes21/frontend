@@ -1,26 +1,36 @@
-import React from "react";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography"
 import { Table, TableCell, TableRow } from "@mui/material";
+
 import { Item } from "./Item";
-import { useAppSelector, useAppDispatch } from "../redux/hooks/hooks";
-import { deleteClientsByIds } from "../redux/thunks/thunksClients";
 import AutoComplete from "./AutoComplete";
 
+import { useAppSelector, useAppDispatch } from "../redux/hooks/hooks";
+import { deleteClients, fetchClients } from "../redux/thunks/thunksClients";
+import {useEffect} from "react"
+import { toggleClientIdClear } from "../redux/slices/client.Slice";
 
-const List: React.FC<{}> = () => {
-  const selectedclientsId = useAppSelector(
+
+const List = () => {
+ 
+  const dispatch = useAppDispatch()
+  const selectClientsByIds = useAppSelector(
     (state) => state.clients.selectedClientIds
   );
 
-  const dispatch = useAppDispatch();
 
-  const eliminarClientes = () => {
-    dispatch(deleteClientsByIds(selectedclientsId));
+  const handleClients = async() => {
+    await deleteClients(selectClientsByIds);
+    await dispatch(fetchClients());
+    dispatch(toggleClientIdClear([]));
+   
   };
+  useEffect(() => {
+  }, [handleClients]);
+ 
 
   return (
     <Container>
@@ -30,12 +40,13 @@ const List: React.FC<{}> = () => {
         <Table sx={{ minWidth: 360 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell onClick={eliminarClientes}><Typography sx={{color:"#F52A05", cursor:"pointer"}}>ELIMINAR</Typography></TableCell>
-              <TableCell>NOMBRE</TableCell>
-              <TableCell>DIRECCION</TableCell>
-              <TableCell>DOCUMENTO</TableCell>
-              <TableCell>TELEFONO</TableCell>
+              <TableCell onClick={handleClients}><Typography sx={{color:"#F52A05", cursor:"pointer"}}>ELIMINAR</Typography></TableCell>
+              <TableCell>NAME</TableCell>
+              <TableCell>ADDRESS</TableCell>
+              <TableCell>DOCUMENT</TableCell>
+              <TableCell>PHONE</TableCell>
               <TableCell>INFO</TableCell>
+              <TableCell>EDIT</TableCell>
             </TableRow>
           </TableHead>
           <Item />

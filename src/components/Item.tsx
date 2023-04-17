@@ -1,34 +1,39 @@
-import React from "react";
+import { useEffect } from "react";
 import { TableBody, TableCell, TableRow } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-import { FiEye } from "react-icons/fi";
 import { useAppSelector, useAppDispatch } from "../redux/hooks/hooks";
-import { getClientById } from "../redux/thunks/thunksClients";
-import { toggleClientId, updateStateModal } from "../redux/slices/clienteSlice";
+
+import { FiEye } from "react-icons/fi";
+import { BiEdit } from "react-icons/bi";
+
+import { useNavigate } from "react-router-dom";
+import { toggleClientId, openModal } from "../redux/slices/client.Slice";
+import { fetchClientById, fetchClients } from "../redux/thunks/thunksClients";
+
 import "./item.css";
 
-interface Client {
-  direccion: string;
-  documento: string;
-  nombre: string;
-  telefono: string;
-  _id: string;
-}
-
-export const Item: React.FC<{}> = () => {
+export const Item = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const clients: Client[] = useAppSelector((state) => state.clients.clients);
-  const stateModal = useAppSelector((state) => state.clients.stateModal);
+  const clients = useAppSelector((state) => state.clients.clients);
 
   const toggleSelectClient = (id: string, checked: boolean) => {
     dispatch(toggleClientId({ id, checked }));
   };
 
-  const clientById = (id: string) => {
-    dispatch(getClientById(id));
-    dispatch(updateStateModal(!stateModal));
+  const handleModal = (id: string) => {
+    dispatch(fetchClientById(id));
+    dispatch(openModal());
   };
+
+  const handleChange = (id: string) => {
+    navigate(`/actualizar/${id}`);
+  };
+
+  useEffect(() => {
+    dispatch(fetchClients());
+  }, []);
 
   return (
     <TableBody>
@@ -45,13 +50,21 @@ export const Item: React.FC<{}> = () => {
             />
           </TableCell>
           <TableCell component="th" scope="row">
-            {item.nombre}
+            {item.name}
           </TableCell>
-          <TableCell>{item.direccion}</TableCell>
-          <TableCell>{item.documento}</TableCell>
-          <TableCell>{item.telefono}</TableCell>
+          <TableCell>{item.address}</TableCell>
+          <TableCell>{item.document}</TableCell>
+          <TableCell>{item.phone}</TableCell>
           <TableCell>
-            <FiEye className="eyeItem" onClick={() => clientById(item._id)} />
+            <FiEye
+              className="eyeItem"
+              onClick={() => {
+                handleModal(item._id);
+              }}
+            />
+          </TableCell>
+          <TableCell>
+            <BiEdit onClick={() => handleChange(item._id)} />
           </TableCell>
         </TableRow>
       ))}
