@@ -1,14 +1,12 @@
-import List from "../components/List";
+import List from "../components/listClients";
 import Container from "@mui/material/Container";
-import CompModal from "../components/Modal";
+import { ListClients, ModalData } from "../components";
 
-const Home: React.FC = () => {
-
-
+const Home = () => {
   return (
     <Container sx={{ paddingTop: " 150px" }}>
-      <CompModal />
-      <List />
+      <ModalData />
+      <ListClients />
     </Container>
   );
 };

@@ -8,9 +8,9 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch } from "../redux/hooks/hooks";
-import { addClient, updateClient } from "../redux/thunks/thunksClients";
-import { AddClient } from "../redux/interface";
+import { useAppDispatch } from "../../redux/hooks/hooks";
+import { addClient, updateClient } from "../../redux/thunks/thunksClients";
+import { AddClient } from "../../redux/interface";
 
 const Form = () => {
   const navigate = useNavigate();

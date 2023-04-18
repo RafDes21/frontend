@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { AddClient, Client, Clients, ClientsLoadedAction } from "../interface";
+import { AddClient, ClientsLoadedAction } from "../interface";
 import { saveClients, selectClient } from "../slices/client.Slice";
 import {
   getClients,

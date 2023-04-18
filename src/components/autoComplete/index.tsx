@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
-import { useAppSelector } from "../redux/hooks/hooks";
+import { useAppSelector } from "../../redux/hooks/hooks";
 import { useNavigate } from "react-router-dom";
 
 interface Client {
@@ -10,7 +10,7 @@ interface Client {
   label: string;
 }
 
-const AutoComplete: React.FC<{}> = () => {
+const AutoComplete = () => {
   const navigate = useNavigate();
   const listClients = useAppSelector((state) => state.clients.clients);
   const [dataClient, setDataClient] = useState<Client | null>(null);

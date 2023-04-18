@@ -6,15 +6,15 @@ import Typography from "@mui/material/Typography"
 import { Table, TableCell, TableRow } from "@mui/material";
 
 import { Item } from "./Item";
-import AutoComplete from "./AutoComplete";
+import AutoComplete from "../autoComplete";
 
-import { useAppSelector, useAppDispatch } from "../redux/hooks/hooks";
-import { deleteClients, fetchClients } from "../redux/thunks/thunksClients";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks/hooks";
+import { deleteClients, fetchClients } from "../../redux/thunks/thunksClients";
 import {useEffect} from "react"
-import { toggleClientIdClear } from "../redux/slices/client.Slice";
+import { toggleClientIdClear } from "../../redux/slices/client.Slice";
 
 
-const List = () => {
+const ListClients = () => {
  
   const dispatch = useAppDispatch()
   const selectClientsByIds = useAppSelector(
@@ -56,4 +56,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default ListClients;

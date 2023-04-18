@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { TableBody, TableCell, TableRow } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-import { useAppSelector, useAppDispatch } from "../redux/hooks/hooks";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks/hooks";
 
 import { FiEye } from "react-icons/fi";
 import { BiEdit } from "react-icons/bi";
 
 import { useNavigate } from "react-router-dom";
-import { toggleClientId, openModal } from "../redux/slices/client.Slice";
-import { fetchClientById, fetchClients } from "../redux/thunks/thunksClients";
+import { toggleClientId, openModal } from "../../redux/slices/client.Slice";
+import { fetchClientById, fetchClients } from "../../redux/thunks/thunksClients";
 
 import "./item.css";
 
