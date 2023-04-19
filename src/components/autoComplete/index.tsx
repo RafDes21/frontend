@@ -23,7 +23,7 @@ const AutoComplete = () => {
   const handleChange = (event: any, newValue: Client | null) => {
     setDataClient(newValue);
     const id = newValue?.id;
-    navigate(`/actualizar/${id}`);
+    navigate(`/addClient/${id}`);
   };
 
   return (

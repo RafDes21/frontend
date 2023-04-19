@@ -36,11 +36,11 @@ const ListClients = () => {
     <Container>
       <AutoComplete/>
       <TableContainer component={Paper}>
-        <Typography align="center" variant="h4" color="primary">LISTA DE CLIENTES</Typography>
+        <Typography align="center" variant="h4" color="primary" my={5}>PATIENTS LIST</Typography>
         <Table sx={{ minWidth: 360 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell onClick={handleClients}><Typography sx={{color:"#F52A05", cursor:"pointer"}}>ELIMINAR</Typography></TableCell>
+              <TableCell onClick={handleClients}><Typography sx={{color:"#F52A05", cursor:"pointer"}}>DELETE</Typography></TableCell>
               <TableCell>NAME</TableCell>
               <TableCell>ADDRESS</TableCell>
               <TableCell>DOCUMENT</TableCell>

@@ -1,8 +1,13 @@
 .nav-item {
-  color: #010101;
+  color: #ade8f4;
   text-decoration: none;
   font-size: 20px;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  text-shadow: -2px 2px -3px #000;
 }
 
 .nav-item::after {
@@ -18,4 +23,8 @@
 .nav-item:hover::after {
   width: 100%;
   transition: all 0.5s;
+}
+
+.navbarLogo{
+  width: 70px;
 }

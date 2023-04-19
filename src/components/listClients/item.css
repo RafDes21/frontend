@@ -1,5 +1,10 @@
-.eyeItem{
-    color: #5969EE;
-    font-size: 30px;
-    cursor: pointer;
+.iconInfo {
+  color: #023e8a;
+  font-size: 20px;
+  cursor: pointer;
+}
+.iconEdit {
+  font-size: 20px;
+  color: #023e8a;
+  cursor: pointer;
 }

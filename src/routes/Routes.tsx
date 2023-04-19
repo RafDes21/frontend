@@ -11,8 +11,8 @@ const CompRoutes: React.FC<{}> = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="/agregar" element={<Clients />} />
-          <Route path="/actualizar/:id" element={<Clients />} />
+          <Route path="/addClient" element={<Clients />} />
+          <Route path="/addClient/:id" element={<Clients />} />
         </Route>
       </Routes>
       <ToastContainer />

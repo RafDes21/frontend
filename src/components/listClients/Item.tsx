@@ -3,7 +3,7 @@ import { TableBody, TableCell, TableRow } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks/hooks";
 
-import { FiEye } from "react-icons/fi";
+import { ImInfo } from "react-icons/im";
 import { BiEdit } from "react-icons/bi";
 
 import { useNavigate } from "react-router-dom";
@@ -28,7 +28,7 @@ export const Item = () => {
   };
 
   const handleChange = (id: string) => {
-    navigate(`/actualizar/${id}`);
+    navigate(`/addClient/${id}`);
   };
 
   useEffect(() => {
@@ -56,15 +56,15 @@ export const Item = () => {
           <TableCell>{item.document}</TableCell>
           <TableCell>{item.phone}</TableCell>
           <TableCell>
-            <FiEye
-              className="eyeItem"
+            <ImInfo
+              className="iconInfo"
               onClick={() => {
                 handleModal(item._id);
               }}
             />
           </TableCell>
           <TableCell>
-            <BiEdit onClick={() => handleChange(item._id)} />
+            <BiEdit className="iconEdit" onClick={() => handleChange(item._id)} />
           </TableCell>
         </TableRow>
       ))}
