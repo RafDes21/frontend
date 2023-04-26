@@ -1,21 +1,17 @@
 import React, { useEffect } from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import {
   addClient,
+  fetchClients,
   updateClient,
-  fetchClientById,
 } from "../../redux/thunks/thunksClients";
 import { AddClient } from "../../redux/interface";
+import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import { toast } from "react-toastify";
 import room from "../../assets/room.jpg";
 import "./styles.css";
+import { filterClient } from "../../redux/slices/client.Slice";
 
 const Form = () => {
   const navigate = useNavigate();
@@ -24,7 +20,7 @@ const Form = () => {
 
   const client = useAppSelector((state) => state.clients.selectedClient);
 
-  const [data, setData] = React.useState<AddClient>({
+  const [formData, setFormData] = React.useState<AddClient>({
     name: client ? client.name : "",
     document: client ? client.document : "",
     address: client ? client.address : "",
@@ -32,26 +28,26 @@ const Form = () => {
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (id) {
-      updateClient(id, data);
+      await updateClient(id, formData);
+      await dispatch(fetchClients());
+      dispatch(filterClient(""));
       navigate("/");
       toast.success("Client update...");
     } else {
-      addClient(data);
+      addClient(formData);
       toast.success("Add Client!");
       navigate("/");
     }
   };
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchClientById(id));
-    } else {
-      setData({
+    if (!id) {
+      setFormData({
         name: "",
         document: "",
         address: "",
@@ -60,82 +56,88 @@ const Form = () => {
     }
   }, [id]);
 
+  const isEditMode = Boolean(id);
+
   return (
-    <Grid container>
-      <Grid xs={12} sm={6}>
-        <Paper sx={{ padding: "10px", borderRadius: "8px" }}>
-          {id ? (
-            <Typography sx={{ mt: 1, mb: 1 }} align="center" color="primary">
-              EDITED DATA
+    <Box sx={{ marginTop: "60px", maxHeight: "600px", display: "flex" }}>
+      <Grid container>
+        <Grid item xs={12} sm={6} display={"flex"} alignItems={"center"} p={2}>
+          <Paper sx={{ px: 4, borderRadius: "8px" }}>
+            <Typography sx={{ my: 4 }} align="center" color="primary">
+              {isEditMode ? "EDITED DATA" : "ADD NEW CLIENT"}
             </Typography>
-          ) : (
-            <Typography sx={{ mt: 1, mb: 1 }} align="center" color="primary">
-              ADD NEW CLIENT
-            </Typography>
-          )}
-          <Box component="form" onSubmit={handleSubmit}>
-            <TextField
-              fullWidth
-              name="name"
-              label="Name"
-              value={data.name}
-              sx={{ mt: 2, mb: 1.5 }}
-              required
-              onChange={handleInputChange}
-            />
-            <TextField
-              fullWidth
-              name="document"
-              value={data.document}
-              label="DNI"
-              sx={{ mt: 2, mb: 1.5 }}
-              required
-              onChange={handleInputChange}
-            />
-            <TextField
-              fullWidth
-              name="address"
-              label="address"
-              sx={{ mt: 2, mb: 1.5 }}
-              value={data.address}
-              required
-              onChange={handleInputChange}
-            />
-            <TextField
-              fullWidth
-              name="phone"
-              label="phone"
-              sx={{ mt: 2, mb: 1.5 }}
-              required
-              value={data.phone}
-              onChange={handleInputChange}
-            />
-            {id ? (
+
+            <Box component="form" onSubmit={handleSubmit}>
+              <TextField
+                fullWidth
+                variant="standard"
+                name="name"
+                label="Name"
+                value={formData.name}
+                sx={{ my: 2 }}
+                required
+                onChange={handleInputChange}
+              />
+              <TextField
+                fullWidth
+                variant="standard"
+                name="document"
+                value={formData.document}
+                label="DNI"
+                sx={{ my: 2 }}
+                required
+                onChange={handleInputChange}
+              />
+              <TextField
+                fullWidth
+                variant="standard"
+                name="address"
+                label="address"
+                sx={{ my: 2 }}
+                value={formData.address}
+                required
+                onChange={handleInputChange}
+              />
+              <TextField
+                fullWidth
+                variant="standard"
+                name="phone"
+                label="phone"
+                sx={{ my: 2 }}
+                required
+                value={formData.phone}
+                onChange={handleInputChange}
+              />
+
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 color="success"
+                sx={{ my: 2 }}
               >
-                Update
+                {isEditMode ? "Update" : "Add Client"}
               </Button>
-            ) : (
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="success"
-              >
-                Add Client
-              </Button>
-            )}
-          </Box>
-        </Paper>
+            </Box>
+          </Paper>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          display={"flex"}
+          justifyContent={"center"}
+          height={"100%"}
+          py={2}
+        >
+          <img
+            src={room}
+            style={{ width: "100%", objectFit: "cover" }}
+            alt="consultingRoom"
+          />
+        </Grid>
       </Grid>
-      <Grid xs={12} sm={6}>
-        <img src={room} />
-      </Grid>
-    </Grid>
+    </Box>
   );
 };
 

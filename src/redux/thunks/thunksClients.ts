@@ -35,10 +35,10 @@ export const fetchClientById = (id: string) => {
   };
 };
 
-export const updateClient = async (id: string, client: AddClient) => {
+export const updateClient = async (id: string, client: AddClient) => {  
   await updateClientById(id, client);
 };
 
-export const deleteClients = async (ids: string[]) => {
+export const deleteClients = async (ids: string[]) => {  
   await deleteClientsByIds(ids);
 };

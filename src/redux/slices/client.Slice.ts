@@ -1,16 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  ClientState,
-  Client,
-  ToggleClientPayload,
-  Clients,
-} from "../interface";
+import { ClientState, ToggleClientPayload, Clients } from "../interface";
 
 const initialState: ClientState = {
   clients: [],
   selectedClient: null,
   selectedClientIds: [],
   isModalOpen: false,
+  filter: "",
 };
 
 const clientSlice = createSlice({
@@ -36,16 +32,18 @@ const clientSlice = createSlice({
         });
       }
     },
-    toggleClientIdClear:(state, action)=>{
-      console.log(action.payload);
-      
-      state.selectedClientIds = action.payload
+    toggleClientIdClear: (state, action) => {
+      state.selectedClientIds = action.payload;
     },
     openModal: (state) => {
       state.isModalOpen = true;
     },
     closeModal: (state) => {
       state.isModalOpen = false;
+    },
+
+    filterClient: (state, action) => {
+      state.filter = action.payload;
     },
   },
 });
@@ -57,5 +55,6 @@ export const {
   toggleClientId,
   openModal,
   closeModal,
-  toggleClientIdClear
+  toggleClientIdClear,
+  filterClient,
 } = clientSlice.actions;

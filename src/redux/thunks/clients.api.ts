@@ -5,7 +5,7 @@ const apiHost = process.env.REACT_APP_API_URL;
 
 export const createClient = async (client: AddClient) => {
   try {
-    await axios.post(`${apiHost}/api/clients`, client);
+    await axios.post(`${apiHost}/patients`, client);
   } catch (error) {
     console.error(error);
   }
@@ -13,7 +13,7 @@ export const createClient = async (client: AddClient) => {
 
 export const getClients = async () => {
   try {
-    const response = await axios.get(`${apiHost}/api/clients`);
+    const response = await axios.get(`${apiHost}/patients`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -22,9 +22,7 @@ export const getClients = async () => {
 
 export const getClientById = async (id: any) => {
   try {
-    const response = await axios.get(`${apiHost}/api/clients/${id}`);
-    console.log(response.data);
-
+    const response = await axios.get(`${apiHost}/patients/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -33,27 +31,15 @@ export const getClientById = async (id: any) => {
 
 export const updateClientById = async (id: string, client: AddClient) => {
   try {
-    await axios.put(`${apiHost}/api/client/${id}`, client);
+    await axios.put(`${apiHost}/patients/${id}`, client);
   } catch (error) {
     console.error(error);
   }
 };
 export const deleteClientsByIds = async (ids: any) => {
   try {
-    await axios.delete(`${apiHost}/api/client?ids=${ids.join(",")}`);
+    await axios.delete(`${apiHost}/patients?ids=${ids.join(",")}`);
   } catch (error) {
     console.error(error);
   }
 };
-
-
-
-// export const getClientId = async (id: any) => {
-//   try {
-//     const response = await axios.get(`${apiHost}/api/clients/${id}`);
-//     return response.data;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
-

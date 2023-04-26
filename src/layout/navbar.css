@@ -1,7 +1,7 @@
 .nav-item {
   color: #ade8f4;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 16px;
   position: relative;
   display: flex;
   justify-content: center;
@@ -13,7 +13,7 @@
 .nav-item::after {
   content: "";
   position: absolute;
-  border-bottom: 4px solid #59c8ee;
+  border-bottom: 2px solid #59c8ee;
   left: 0;
   bottom: -5px;
   z-index: 2;
@@ -25,6 +25,6 @@
   transition: all 0.5s;
 }
 
-.navbarLogo{
-  width: 70px;
+.navbarLogo {
+  width: 65px;
 }

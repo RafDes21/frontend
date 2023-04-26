@@ -1,10 +1,10 @@
-import List from "../components/listClients";
 import Container from "@mui/material/Container";
-import { ListClients, ModalData } from "../components";
+import { ListClients, ModalData, Search } from "../components";
 
 const Home = () => {
   return (
     <Container sx={{ paddingTop: " 150px" }}>
+      <Search />
       <ModalData />
       <ListClients />
     </Container>

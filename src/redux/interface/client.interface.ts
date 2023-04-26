@@ -20,6 +20,7 @@ export interface ClientState {
   selectedClientIds: string[];
   selectedClient: Clients | null;
   isModalOpen: boolean;
+  filter:string;
 }
 
 export interface ClientsLoadedAction {

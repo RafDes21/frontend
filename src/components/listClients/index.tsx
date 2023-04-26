@@ -1,52 +1,65 @@
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import Paper from "@mui/material/Paper";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography"
-import { Table, TableCell, TableRow } from "@mui/material";
-
+import {
+  TableContainer,
+  Table,
+  TableCell,
+  TableRow,
+  TableHead,
+  Paper,
+  Container,
+  Typography,
+} from "@mui/material";
 import { Item } from "./Item";
-import AutoComplete from "../autoComplete";
-
 import { useAppSelector, useAppDispatch } from "../../redux/hooks/hooks";
 import { deleteClients, fetchClients } from "../../redux/thunks/thunksClients";
-import {useEffect} from "react"
 import { toggleClientIdClear } from "../../redux/slices/client.Slice";
 
-
 const ListClients = () => {
- 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const selectClientsByIds = useAppSelector(
     (state) => state.clients.selectedClientIds
   );
 
-
-  const handleClients = async() => {
+  const handleClients = async () => {
     await deleteClients(selectClientsByIds);
     await dispatch(fetchClients());
     dispatch(toggleClientIdClear([]));
-   
   };
-  useEffect(() => {
-  }, [handleClients]);
- 
 
   return (
     <Container>
-      <AutoComplete/>
       <TableContainer component={Paper}>
-        <Typography align="center" variant="h4" color="primary" my={5}>PATIENTS LIST</Typography>
+        <Typography align="center" variant="h4" color="primary" my={5}>
+          PATIENTS LIST
+        </Typography>
         <Table sx={{ minWidth: 360 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell onClick={handleClients}><Typography sx={{color:"#F52A05", cursor:"pointer"}}>DELETE</Typography></TableCell>
-              <TableCell>NAME</TableCell>
-              <TableCell>ADDRESS</TableCell>
-              <TableCell>DOCUMENT</TableCell>
-              <TableCell>PHONE</TableCell>
-              <TableCell>INFO</TableCell>
-              <TableCell>EDIT</TableCell>
+              <TableCell
+                sx={{ textAlign: "center", fontWeight: "bold" }}
+                onClick={handleClients}
+              >
+                <Typography sx={{ color: "#F52A05", cursor: "pointer" }}>
+                  DELETE
+                </Typography>
+              </TableCell>
+              <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                NAME
+              </TableCell>
+              <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                ADDRESS
+              </TableCell>
+              <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                DOCUMENT
+              </TableCell>
+              <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                PHONE
+              </TableCell>
+              <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                INFO
+              </TableCell>
+              <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                EDIT
+              </TableCell>
             </TableRow>
           </TableHead>
           <Item />

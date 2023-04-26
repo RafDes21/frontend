@@ -1,0 +1,41 @@
+.boxModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 330px;
+  height: 400px;
+  font-size: 30px;
+  color: #fff;
+  outline: none;
+  box-shadow: "5px 5px 20px #000000";
+  background-image: url("https://media.printables.com/media/event_images/b9/f445af-fb07-41ed-9af9-c84d00d8a5d1/thumbs/cover/640x640/png/screenshot_35.webp");
+  background-repeat: no-repeat;
+  background-position: left;
+  padding: 10px 20px;
+  box-shadow: 5px 5px 20px #050b13d1;
+  border-radius: 5px;
+}
+.boxModal:after {
+  position: absolute;
+  content: "";
+  background-color: #01010177;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: -5;
+  border-radius: 5px;
+}
+
+.buttonCloseModal {
+  cursor: pointer;
+  color: #f2f2f2;
+  font-size: 30px;
+  margin-top: 40px;
+  margin-left: -10px;
+}
+
+.ModalLogo {
+  width: 60px;
+}
