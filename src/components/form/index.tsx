@@ -40,6 +40,7 @@ const Form = () => {
       toast.success("Client update...");
     } else {
       addClient(formData);
+      await dispatch(fetchClients());
       toast.success("Add Client!");
       navigate("/");
     }
