@@ -7,9 +7,8 @@ import {
   updateClient,
 } from "../../redux/thunks/thunksClients";
 import { AddClient } from "../../redux/interface";
-import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { toast } from "react-toastify";
-import room from "../../assets/room.jpg";
 import "./styles.css";
 import { filterClient } from "../../redux/slices/client.Slice";
 
@@ -30,7 +29,8 @@ const Form = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (id) {
       await updateClient(id, formData);
@@ -60,84 +60,63 @@ const Form = () => {
   const isEditMode = Boolean(id);
 
   return (
-    <Box sx={{ marginTop: "60px", maxHeight: "600px", display: "flex" }}>
-      <Grid container>
-        <Grid item xs={12} sm={6} display={"flex"} alignItems={"center"} p={2}>
-          <Paper sx={{ px: 4, borderRadius: "8px" }}>
-            <Typography sx={{ my: 4 }} align="center" color="primary">
-              {isEditMode ? "EDITED DATA" : "ADD NEW CLIENT"}
-            </Typography>
+    <Box>
+      <Typography sx={{ my: 4 }} align="center" color="primary">
+        {isEditMode ? "EDITED DATA" : "ADD NEW CLIENT"}
+      </Typography>
 
-            <Box component="form" onSubmit={handleSubmit}>
-              <TextField
-                fullWidth
-                variant="standard"
-                name="name"
-                label="Name"
-                value={formData.name}
-                sx={{ my: 2 }}
-                required
-                onChange={handleInputChange}
-              />
-              <TextField
-                fullWidth
-                variant="standard"
-                name="document"
-                value={formData.document}
-                label="DNI"
-                sx={{ my: 2 }}
-                required
-                onChange={handleInputChange}
-              />
-              <TextField
-                fullWidth
-                variant="standard"
-                name="address"
-                label="address"
-                sx={{ my: 2 }}
-                value={formData.address}
-                required
-                onChange={handleInputChange}
-              />
-              <TextField
-                fullWidth
-                variant="standard"
-                name="phone"
-                label="phone"
-                sx={{ my: 2 }}
-                required
-                value={formData.phone}
-                onChange={handleInputChange}
-              />
+      <Paper component="form" onSubmit={handleSubmit} sx={{p:5}}>
+        <TextField
+          fullWidth
+          variant="standard"
+          name="name"
+          label="Name"
+          value={formData.name}
+          sx={{ my: 2 }}
+          required
+          onChange={handleInputChange}
+        />
+        <TextField
+          fullWidth
+          variant="standard"
+          name="document"
+          value={formData.document}
+          label="DNI"
+          sx={{ my: 2 }}
+          required
+          onChange={handleInputChange}
+        />
+        <TextField
+          fullWidth
+          variant="standard"
+          name="address"
+          label="address"
+          sx={{ my: 2 }}
+          value={formData.address}
+          required
+          onChange={handleInputChange}
+        />
+        <TextField
+          fullWidth
+          variant="standard"
+          name="phone"
+          label="phone"
+          sx={{ my: 2 }}
+          required
+          value={formData.phone}
+          onChange={handleInputChange}
+        />
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="success"
-                sx={{ my: 2 }}
-              >
-                {isEditMode ? "Update" : "Add Client"}
-              </Button>
-            </Box>
-          </Paper>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          display={"flex"}
-          justifyContent={"center"}
-          height={"100%"}
-          py={2}
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="success"
+          sx={{ my: 2 }}
         >
-          <img
-            src={room}
-            style={{ width: "100%", objectFit: "cover" }}
-            alt="consultingRoom"
-          />
-        </Grid>
-      </Grid>
+          {isEditMode ? "Update" : "Add Client"}
+        </Button>
+      </Paper>
     </Box>
   );
 };

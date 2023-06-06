@@ -1,7 +1,7 @@
 import axios from "axios";
 import { AddClient } from "../interface";
 
-const apiHost = process.env.REACT_APP_API_URL;
+const apiHost = process.env.REACT_APP_API_HOST;
 
 export const createClient = async (client: AddClient) => {
   try {

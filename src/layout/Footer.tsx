@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <Container
       maxWidth="xl"
-      sx={{ bgcolor: "#023e8a", height: "200px", marginTop: 5, position:"absolute", bottom:0 }}
+      sx={{ bgcolor: "#023e8a", height: "200px", marginTop: 5}}
     >
       <Box
         display="flex"
