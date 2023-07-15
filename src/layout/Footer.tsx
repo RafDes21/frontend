@@ -4,7 +4,7 @@ import { BsFacebook, BsGithub, BsLinkedin, BsWhatsapp } from "react-icons/bs";
 const Footer = () => {
   return (
     <Container
-      maxWidth="xl"
+      maxWidth={false}
       sx={{ bgcolor: "#023e8a", height: "200px", marginTop: 5}}
     >
       <Box
